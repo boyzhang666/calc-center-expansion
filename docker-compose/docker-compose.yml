@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  calc-center-expansion:
+    image: harbor.magusiot.cn:9443/magus/calc-center-expansion:latest
+    container_name: calc-center-expansion
+    restart: unless-stopped
+    ports:
+      - "3006:3006"
+    volumes:
+      # 数据持久化：保存用户创建的函数模板
+      - ./data:/app/server/data
+    environment:
+      - NODE_ENV=production
+      - TZ=Asia/Shanghai
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3006/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s

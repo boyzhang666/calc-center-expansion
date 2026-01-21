@@ -1,0 +1,163 @@
+{
+  "templates": [
+    {
+      "id": "custom_1768300502541",
+      "name": "箱变计算",
+      "description": "LOADRATE，ACTUALPOWER_REALTIME",
+      "formula": "",
+      "nodes": [
+        {
+          "id": "node_1",
+          "type": "MagusAI",
+          "label": "MagusAI",
+          "tagTemplate": "",
+          "position": {
+            "x": 100,
+            "y": 100
+          }
+        },
+        {
+          "id": "node_2",
+          "type": "MagusAI",
+          "label": "MagusAI",
+          "tagTemplate": "",
+          "position": {
+            "x": 100,
+            "y": 188.00001525878906
+          }
+        },
+        {
+          "id": "node_3",
+          "type": "AIEXP",
+          "label": "AIEXP",
+          "tagTemplate": "",
+          "position": {
+            "x": 100,
+            "y": 274.00001525878906
+          }
+        },
+        {
+          "id": "node_4",
+          "type": "AIEXP",
+          "label": "AIEXP",
+          "tagTemplate": "",
+          "position": {
+            "x": 100,
+            "y": 442.99998474121094
+          }
+        },
+        {
+          "id": "node_5",
+          "type": "DIV",
+          "label": "DIV",
+          "tagTemplate": "",
+          "position": {
+            "x": 391,
+            "y": 144
+          }
+        },
+        {
+          "id": "node_6",
+          "type": "MagusAI",
+          "label": "MagusAI",
+          "tagTemplate": "",
+          "position": {
+            "x": 100,
+            "y": 372.99998474121094
+          }
+        },
+        {
+          "id": "node_7",
+          "type": "MUL",
+          "label": "MUL",
+          "tagTemplate": "",
+          "position": {
+            "x": 510,
+            "y": 212.00001525878906
+          }
+        },
+        {
+          "id": "node_8",
+          "type": "DIV",
+          "label": "DIV",
+          "tagTemplate": "",
+          "position": {
+            "x": 389,
+            "y": 372.99998474121094
+          }
+        },
+        {
+          "id": "node_9",
+          "type": "MagusAO",
+          "label": "MagusAO",
+          "tagTemplate": "",
+          "position": {
+            "x": 726,
+            "y": 221.55555725097656
+          }
+        },
+        {
+          "id": "node_10",
+          "type": "MagusAO",
+          "label": "MagusAO",
+          "tagTemplate": "",
+          "position": {
+            "x": 726,
+            "y": 389.99998474121094
+          }
+        }
+      ],
+      "edges": [
+        {
+          "source": "node_1",
+          "target": "node_5",
+          "sourcePort": "V",
+          "targetPort": "X1"
+        },
+        {
+          "source": "node_2",
+          "target": "node_5",
+          "sourcePort": "V",
+          "targetPort": "X2"
+        },
+        {
+          "source": "node_5",
+          "target": "node_7",
+          "sourcePort": "Y",
+          "targetPort": "X1"
+        },
+        {
+          "source": "node_3",
+          "target": "node_7",
+          "sourcePort": "Y",
+          "targetPort": "X2"
+        },
+        {
+          "source": "node_6",
+          "target": "node_8",
+          "sourcePort": "V",
+          "targetPort": "X1"
+        },
+        {
+          "source": "node_4",
+          "target": "node_8",
+          "sourcePort": "Y",
+          "targetPort": "X2"
+        },
+        {
+          "source": "node_7",
+          "target": "node_9",
+          "sourcePort": "Y",
+          "targetPort": "X"
+        },
+        {
+          "source": "node_8",
+          "target": "node_10",
+          "sourcePort": "Y",
+          "targetPort": "X"
+        }
+      ]
+    }
+  ],
+  "updatedAt": "2026-01-14T02:26:50.430Z"
+}
