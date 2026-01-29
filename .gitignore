@@ -9,6 +9,7 @@ lerna-debug.log*
 
 
 dist
+images/*
 release
 dist-ssr
 *.local

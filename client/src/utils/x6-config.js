@@ -314,12 +314,12 @@ export function formatNodeForExport(node, sn) {
       }
     },
     visible: true,
-    shape: nodeData.model === '算术运算' ? 'op-rect' : 'op-rect-io',
-    resize: nodeData.model !== '算术运算',
+    shape: (nodeData.model === '输入块' || nodeData.model === '输出块') ? 'op-rect-io' : 'op-rect',
+    resize: (nodeData.model === '输入块' || nodeData.model === '输出块'),
     ports: {
       groups: {
         in: {
-          position: nodeData.model === '算术运算' ? 'left' : 'right',
+          position: (nodeData.model === '输入块' || nodeData.model === '输出块') ? 'right' : 'left',
           attrs: {
             circle: {
               r: 5,
@@ -331,7 +331,7 @@ export function formatNodeForExport(node, sn) {
           }
         },
         out: {
-          position: nodeData.model === '算术运算' ? 'right' : 'left',
+          position: (nodeData.model === '输入块' || nodeData.model === '输出块') ? 'left' : 'right',
           attrs: {
             circle: {
               r: 5,

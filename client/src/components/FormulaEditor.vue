@@ -364,7 +364,7 @@ const onDrop = (e) => {
 }
 
 // 需要配置点名的节点类型（IO 节点）
-const IO_NODE_TYPES = ['MagusAI', 'MagusDI', 'AI', 'DI', 'AIEXP', 'MagusAO', 'MagusDO', 'LA', 'LD']
+const IO_NODE_TYPES = ['MagusAI', 'MagusDI', 'AI', 'DI', 'AIEXP', 'MagusAIStat', 'RedisAI', 'MagusAO', 'MagusDO', 'LA', 'LD']
 
 // 更新选中状态
 const updateSelectionState = () => {

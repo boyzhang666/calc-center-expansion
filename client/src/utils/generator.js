@@ -1,6 +1,5 @@
 // JSON 生成器 - 将 X6 图形数据转换为兼容格式的 JSON
 import { nanoid } from 'nanoid'
-import { NODE_TYPES } from '../templates/formulas'
 
 /**
  * 生成完整的 JSON 配置
@@ -129,7 +128,6 @@ function generateSingleGroup(graphData, pointConfigs, startSn, offset, deviceNum
 function createNodeCell(node, newId, sn, offset, paddedNumber, pointConfigs) {
   const nodeData = node.data || {}
   const nodeConfig = pointConfigs.nodeConfigs?.[node.id] || {}
-  const typeConfig = NODE_TYPES[nodeData.sysmbol] || {}
 
   // 计算实际位置
   const position = {
@@ -160,18 +158,18 @@ function createNodeCell(node, newId, sn, offset, paddedNumber, pointConfigs) {
   }
 
   // 构建节点数据
-  const isOperator = nodeData.model === '算术运算'
+  const isIO = nodeData.model === '输入块' || nodeData.model === '输出块'
   const isInput = nodeData.model === '输入块'
   const isOutput = nodeData.model === '输出块'
 
   // 端口配置
-  const portsConfig = buildPortsConfig(node, isOperator, isInput, isOutput, typeConfig)
+  const portsConfig = buildPortsConfig(node, isIO)
 
   const cell = {
     position,
     size: {
-      width: node.size?.width || (isOperator ? 80 : 100),
-      height: node.size?.height || (isOperator ? 42 : 22)
+      width: node.size?.width || (isIO ? 100 : 80),
+      height: node.size?.height || (isIO ? 22 : 42)
     },
     attrs: {
       text: {
@@ -182,8 +180,8 @@ function createNodeCell(node, newId, sn, offset, paddedNumber, pointConfigs) {
       }
     },
     visible: true,
-    shape: isOperator ? 'op-rect' : 'op-rect-io',
-    resize: !isOperator,
+    shape: isIO ? 'op-rect-io' : 'op-rect',
+    resize: isIO,
     ports: portsConfig,
     id: newId,
     desc: '',
@@ -215,10 +213,10 @@ function createNodeCell(node, newId, sn, offset, paddedNumber, pointConfigs) {
 /**
  * 构建端口配置
  */
-function buildPortsConfig(node, isOperator, isInput, isOutput, typeConfig) {
+function buildPortsConfig(node, isIO) {
   const groups = {
     in: {
-      position: isOperator ? 'left' : 'right',
+      position: isIO ? 'right' : 'left',
       attrs: {
         circle: {
           r: 5,
@@ -230,7 +228,7 @@ function buildPortsConfig(node, isOperator, isInput, isOutput, typeConfig) {
       }
     },
     out: {
-      position: isOperator ? 'right' : 'left',
+      position: isIO ? 'left' : 'right',
       attrs: {
         circle: {
           r: 5,
@@ -244,7 +242,7 @@ function buildPortsConfig(node, isOperator, isInput, isOutput, typeConfig) {
   }
 
   // 添加 label position 配置（运算块需要）
-  if (isOperator) {
+  if (!isIO) {
     groups.in.label = {
       position: {
         name: 'inside',
@@ -277,7 +275,7 @@ function buildPortsConfig(node, isOperator, isInput, isOutput, typeConfig) {
   const items = (node.ports || []).map(port => {
     const portData = port.data || {}
     return {
-      group: isOperator
+      group: !isIO
         ? (portData.kind === 'in' ? 'in' : 'out')
         : (portData.kind === 'in' ? 'out' : 'in'),
       attrs: {
@@ -311,14 +309,14 @@ export function validateGraphData(graphData) {
   }
 
   // 检查是否有输出节点
-  const hasOutput = graphData.nodes.some(n => n.data?.sysmbol === 'MagusAO')
+  const hasOutput = graphData.nodes.some(n => n.data?.model === '输出块')
   if (!hasOutput) {
-    errors.push('缺少输出节点 (MagusAO)')
+    errors.push('缺少输出节点')
   }
 
   // 检查是否有输入节点
   const hasInput = graphData.nodes.some(n =>
-    n.data?.sysmbol === 'MagusAI' || n.data?.sysmbol === 'AIEXP'
+    n.data?.model === '输入块'
   )
   if (!hasInput) {
     errors.push('缺少输入节点')

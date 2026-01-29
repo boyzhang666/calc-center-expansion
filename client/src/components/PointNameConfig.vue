@@ -124,7 +124,7 @@ const props = defineProps({
 const emit = defineEmits(['update', 'node-focus', 'node-blur'])
 
 // 输入类型节点
-const INPUT_TYPES = ['MagusAI', 'MagusDI', 'AI', 'DI', 'AIEXP']
+const INPUT_TYPES = ['MagusAI', 'MagusDI', 'AI', 'DI', 'AIEXP', 'MagusAIStat', 'RedisAI']
 // 输出类型节点
 const OUTPUT_TYPES = ['MagusAO', 'MagusDO', 'LA', 'LD']
 // 所有 IO 节点类型

@@ -102,7 +102,7 @@ const selectedNodeIds = ref([])
 // 需要配置点名的节点类型
 const IO_NODE_TYPES = [
   // 输入块
-  'MagusAI', 'MagusDI', 'AI', 'DI', 'AIEXP',
+  'MagusAI', 'MagusDI', 'AI', 'DI', 'AIEXP', 'MagusAIStat', 'RedisAI',
   // 输出块
   'MagusAO', 'MagusDO', 'LA', 'LD'
 ]
