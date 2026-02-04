@@ -64,13 +64,18 @@ function generateSingleGroup(graphData, pointConfigs, startSn, offset, deviceNum
 
     const nodeCell = createNodeCell(node, newNodeId, sn, offset, paddedNumber, pointConfigs)
 
-    // 建立端口ID映射
+    // 建立端口ID映射（使用端口名称匹配，而不是数组索引）
     if (node.ports) {
-      node.ports.forEach((port, index) => {
+      node.ports.forEach((port) => {
         const newPortId = nanoid()
         portIdMap[port.id] = newPortId
-        if (nodeCell.ports?.items?.[index]) {
-          nodeCell.ports.items[index].id = newPortId
+        // 通过端口名称找到对应的 nodeCell 端口，而不是依赖数组索引
+        const portName = port.data?.name || port.attrs?.text?.text
+        const matchingItem = nodeCell.ports?.items?.find(item =>
+          item.data?.name === portName || item.attrs?.text?.text === portName
+        )
+        if (matchingItem) {
+          matchingItem.id = newPortId
         }
       })
     }
